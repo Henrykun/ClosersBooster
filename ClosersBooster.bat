@@ -40,6 +40,7 @@ echo  [A] Closers, Discord, Steam y Navegadores "ABIERTO" (lo demas cierralo)
 echo  [C] Cerrar Todo Menos Closers
 echo  [D] Cerrar Todo Menos Closers y Discord
 echo  [S] Cerrar Todo Menos Closers y Steam
+echo  [M] Cerrar Todo Menos Closers, Steam y Discord
 echo  [G] Cerrar Todo Menos Closers y Google Chrome
 echo  [F] Cerrar Todo Menos Closers y Firefox
 echo %linea%
@@ -59,6 +60,7 @@ IF /I "%var%"=="S" call :Steam
 IF /I "%var%"=="G" call :Google
 IF /I "%var%"=="F" call :Firefox
 IF /I "%var%"=="X" call :Impresora
+IF /I "%var%"=="M" call :SteamDiscord
 Goto INICIO
 
 :Todos
@@ -99,6 +101,11 @@ CLS
 taskkill /f /t /im Chrome.exe
 taskkill /f /t /im Steam.exe
 taskkill /f /t /im Discord.exe
+Goto Generico
+
+:SteamDiscord
+taskkill /f /t /im Chrome.exe
+taskkill /f /t /im Firefox.exe
 Goto Generico
 
 :Impresora
