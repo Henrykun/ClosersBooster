@@ -32,6 +32,7 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0" 
 :--------------------------------------  
 
+:INICIO
 Set Linea=----------------------------------------------------------------------------
 cls
 echo %linea%
@@ -58,7 +59,7 @@ IF /I "%var%"=="S" call :Steam
 IF /I "%var%"=="G" call :Google
 IF /I "%var%"=="F" call :Firefox
 IF /I "%var%"=="X" call :Impresora
-Goto Validar
+Goto INICIO
 
 :Todos
 CLS
