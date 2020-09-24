@@ -1,4 +1,7 @@
 # ClosersBooster
+
+![CloserBooster Imagen](https://i.imgur.com/znek012.png)
+
 ClosersBooster Herramienta para finalizar procesos innecesarios mientras juegas closers.
 
 --------------
