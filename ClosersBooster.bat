@@ -61,6 +61,7 @@ IF /I "%var%"=="G" call :Google
 IF /I "%var%"=="F" call :Firefox
 IF /I "%var%"=="X" call :Impresora
 IF /I "%var%"=="M" call :SteamDiscord
+SET "var="
 Goto INICIO
 
 :Todos
