@@ -46,6 +46,8 @@ echo  [F] Cerrar Todo Menos Closers y Firefox
 echo %linea%
 Echo  [X] Reactivar servicio de Impresoras
 echo %linea%
+Echo  [U] Desactivar Actualizaciones(Win-Update, Adobe, Google, Java..)
+echo %linea%
 echo  NOTA: Se te recomienda que guardes todo tu trabajo en Microsoft Office, 
 echo  Navegadores, etc.. antes de ejecutar esta Herramienta, para que no 
 echo  pierdas el trabajo realizado.
@@ -61,6 +63,7 @@ IF /I "%var%"=="G" call :Google
 IF /I "%var%"=="F" call :Firefox
 IF /I "%var%"=="X" call :Impresora
 IF /I "%var%"=="M" call :SteamDiscord
+IF /I "%var%"=="U" call :OptimizarOK
 SET "var="
 Goto INICIO
 
@@ -172,5 +175,91 @@ taskkill /f /t /im mspub.exe
 taskkill /f /t /im onenote.exe
 taskkill /f /t /im outlook.exe
 taskkill /f /t /im systeminfo.exe
+taskkill /f /t /im WinAuth.exe
 taskkill /f /t /im winword.exe
 EXIT
+
+Rem Nuevas Funciones
+
+:OptimizarOK
+CLS
+CALL :UPDATESWINOFF
+CALL :FirefoxPrefOFF
+CALL :FirefoxSET
+CALL :AdobeGoogleUpdateOFF
+Goto INICIO
+
+:UPDATESWINOFF
+CLS
+ECHO Se estan deshabilitando las actualizaciones de Windows...
+sc stop wuauserv >NUL 2>&1
+sc config wuauserv start=disabled >NUL 2>&1
+SET "z1=HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization"
+reg add "%z1%" /v SystemSettingsDownloadMode /d 0 /t REG_DWORD /f
+reg add "%z1%\Config" /v DODownloadMode /d 0 /t REG_DWORD /f
+reg add "%z1%\Config" /v DownloadMode /d 0 /t REG_DWORD /f
+SET "z2=HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU"
+reg add %z2% /v AUOptions /d 4 /t REG_DWORD /f
+reg add %z2% /v NoAutoUpdate /d 1 /t REG_DWORD /f
+SET "z3=HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\OSUpgrade"
+reg add %z3% /v "AllowOSUpgrade" /t REG_DWORD /d 0 /f
+reg add %z3% /v "ReservationsAllowed" /t REG_DWORD /d 0 /f
+Rem Otros Desactivadores
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate" /v AutoDownload /d 2 /t REG_DWORD /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v AUOptions /d 2 /t REG_DWORD /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v AutoDownload /d 2 /t REG_DWORD /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v DeferUpgrade /d 1 /t REG_DWORD /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v "DisableOSUpgrade" /t REG_DWORD /d 1 /f
+reg add "HKLM\Software\Policies\Microsoft\Windows\Gwx" /v "DisableGwx" /t REG_DWORD /d 1 /f
+CLS
+ECHO  * ACTUALIZACIONES DE WINDOWS DESACTIVADAS - PRESIONA ENTER *
+ECHO.
+ECHO.
+GOTO:EOF
+
+:FirefoxPrefOFF
+SET "z1=%ProgramFiles%\Mozilla Firefox"
+SET "z2=%PROGRAMFILES(x86)%\Mozilla Firefox"
+SET "z3=defaults\pref"
+SET "z4="
+SET "z5="
+IF EXIST "%z1%" SET "z4=%z1%\%z3%" & SET "z5=%z1%" & Call :FirefoxSET
+IF EXIST "%z2%" SET "z4=%z2%\%z3%" & SET "z5=%z1%" & Call :FirefoxSET
+GOTO:EOF
+
+:FirefoxSET
+IF Exist "%z4%" Rd /S /Q "%z4%" >NUL	
+IF Not Exist "%z4%" MkDir "%z4%" >NUL	
+echo // > "%z4%\local-settings.js"
+echo pref^("general.config.filename", "mozilla.cfg"^); >> "%z4%\local-settings.js" 
+echo pref^("general.config.obscure_value", 0^); >> "%z4%\local-settings.js" 
+echo pref^("browser.rights.3.shown", true^); >> "%z4%\local-settings.js" 
+echo // > "%z5%\mozilla.cfg"
+echo lockPref^("app.update.service.enabled", false^); >> "%z5%\mozilla.cfg"
+echo lockPref^("app.update.url", "https://localhost"^); >> "%z5%\mozilla.cfg"
+GOTO:EOF
+
+:AdobeGoogleUpdateOFF
+CLS
+Rem Desactivar configuracion Servicios de Google y Adobe
+for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Google ^| findstr Update') do sc config %%x start=disabled
+for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Adobe ^| findstr Update') do sc config %%x start=disabled
+Rem Desactivar Tareas de Google y Adobe
+for /f "tokens=2 delims=\" %%x in ('schtasks /query /fo:list ^| findstr ^^Google ^| findstr ^^Update') do schtasks /Change /TN "%%x" /Disable
+for /f "tokens=2 delims=\" %%x in ('schtasks /query /fo:list ^| findstr ^^Adobe ^| findstr ^^Update') do schtasks /Change /TN "%%x" /Disable
+Rem Deteniendo Servicios de Google y Adobe
+for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Google ^| findstr Update') do sc stop %%x
+for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Adobe ^| findstr Update') do sc stop %%x
+sc config AdobeARMservice start= disabled
+sc stop AdobeARMservice
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "SunJavaUpdateSched" /f >NUL 2>&1
+reg delete "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run" /v "SunJavaUpdateSched" /f >NUL 2>&1
+reg add "HKLM\SOFTWARE\JavaSoft\Java Update\Policy" /V EnableJavaUpdate /T REG_DWORD /D 0 /F >NUL 2>&1
+reg add "HKLM\SOFTWARE\Wow6432Node\JavaSoft\Java Update\Policy" /V EnableJavaUpdate /T REG_DWORD /D 0 /F >NUL 2>&1
+taskkill /IM jucheck.exe /F
+taskkill /IM juscheck.exe /F
+CLS
+ECHO  * SE HAN DESACTIVADO CORRECTAMENTE LAS ACTUALIZACIONES - PRESIONA ENTER *
+ECHO.
+ECHO.
+GOTO:EOF
