@@ -174,6 +174,9 @@ taskkill /f /t /im juscheck.exe
 taskkill /f /t /im mspub.exe
 taskkill /f /t /im onenote.exe
 taskkill /f /t /im outlook.exe
+taskkill /f /t /im RAVBg64.exe
+rem taskkill /f /t /im steamwebhelper.exe
+taskkill /f /t /im ShellExperienceHost.exe
 taskkill /f /t /im systeminfo.exe
 taskkill /f /t /im WinAuth.exe
 taskkill /f /t /im winword.exe
@@ -187,6 +190,7 @@ CALL :UPDATESWINOFF
 CALL :FirefoxPrefOFF
 CALL :FirefoxSET
 CALL :AdobeGoogleUpdateOFF
+CALL :MemoryOptimize
 Goto INICIO
 
 :UPDATESWINOFF
@@ -262,4 +266,9 @@ CLS
 ECHO  * SE HAN DESACTIVADO CORRECTAMENTE LAS ACTUALIZACIONES - PRESIONA ENTER *
 ECHO.
 ECHO.
+GOTO:EOF
+
+:MemoryOptimize
+CLS
+Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "AlwaysUnloadDll" /t REG_DWORD /d "1" /f
 GOTO:EOF
