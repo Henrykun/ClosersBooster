@@ -180,6 +180,7 @@ taskkill /f /t /im ShellExperienceHost.exe
 taskkill /f /t /im systeminfo.exe
 taskkill /f /t /im WinAuth.exe
 taskkill /f /t /im winword.exe
+Call :LiberarRam
 EXIT
 
 Rem Nuevas Funciones
@@ -271,4 +272,21 @@ GOTO:EOF
 :MemoryOptimize
 CLS
 Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "AlwaysUnloadDll" /t REG_DWORD /d "1" /f
+GOTO:EOF
+
+:LiberarRam
+cls
+echo.
+set /p= " Liberando RAM, por favor espere...  " <nul  
+timeout /t 2 /nobreak > NUL
+echo Mystring=(1000000000) > %temp%\liberaram.vbs
+start %temp%\liberaram.vbs
+echo Mystring=(1655000000) > %temp%\liberaram.vbs
+start %temp%\liberaram.vbs
+echo Mystring=(2000000000) > %temp%\liberaram.vbs
+start %temp%\liberaram.vbs
+CLS
+echo  RAM liberada.. [OK] 
+timeout /t 3 /nobreak > NUL
+Del /S /Q %temp%\liberaram.vbs
 GOTO:EOF
