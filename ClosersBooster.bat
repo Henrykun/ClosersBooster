@@ -37,10 +37,9 @@ Set Linea=----------------------------------------------------------------------
 cls
 echo %linea%
 echo  [A] Closers, Discord, Steam y Navegadores "ABIERTO" (lo demas cierralo)
-echo  [C] Cerrar Todo Menos Closers
+echo  [C] Cerrar Todo Menos Closers (Modo Nomal)
+echo  [S] Cerrar Todo Menos Closers !!Modo Extremo!!
 echo  [D] Cerrar Todo Menos Closers y Discord
-echo  [S] Cerrar Todo Menos Closers y Steam
-echo  [M] Cerrar Todo Menos Closers, Steam y Discord
 echo  [G] Cerrar Todo Menos Closers y Google Chrome
 echo  [F] Cerrar Todo Menos Closers y Firefox
 echo %linea%
@@ -57,12 +56,11 @@ echo %linea%
 SET /p var= ^> Seleccione una opcion [...]: 
 IF /I "%var%"=="A" call :Todos
 IF /I "%var%"=="C" call :Closers
+IF /I "%var%"=="S" call :ClosersEX
 IF /I "%var%"=="D" call :Discord
-IF /I "%var%"=="S" call :Steam
 IF /I "%var%"=="G" call :Google
 IF /I "%var%"=="F" call :Firefox
 IF /I "%var%"=="X" call :Impresora
-IF /I "%var%"=="M" call :SteamDiscord
 IF /I "%var%"=="U" call :OptimizarOK
 SET "var="
 Goto INICIO
@@ -74,28 +72,34 @@ Goto Generico
 :Closers
 CLS
 taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Steam.exe
 taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
+Goto Generico
+
+:ClosersEX
+CLS
+taskkill /f /t /im Chrome.exe
+taskkill /f /t /im Discord.exe
+taskkill /f /t /im Firefox.exe
+taskkill /f /t /im Calc.exe
+taskkill /f /t /im Explorer.exe
+taskkill /f /t /im NOTEPAD.exe
+taskkill /f /t /im Taskmgr.exe
+taskkill /f /t /im Wale.exe
+taskkill /f /t /im mpc-hc64.exe
+taskkill /f /t /im steamwebhelper.exe
+taskkill /f /t /im wmplayer.exe
+Start Explorer.exe
 Goto Generico
 
 :Discord
 CLS
 taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Steam.exe
-taskkill /f /t /im Firefox.exe
-Goto Generico
-
-:Steam
-CLS
-taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
 Goto Generico
 
 :Google
 CLS
-taskkill /f /t /im Steam.exe
 taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
 Goto Generico
@@ -103,13 +107,8 @@ Goto Generico
 :Firefox
 CLS
 taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Steam.exe
-taskkill /f /t /im Discord.exe
-Goto Generico
 
-:SteamDiscord
-taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Firefox.exe
+taskkill /f /t /im Discord.exe
 Goto Generico
 
 :Impresora
@@ -138,6 +137,7 @@ taskkill /f /t /im AcroRd32.exe
 taskkill /f /t /im CCUpdate.exe
 taskkill /f /t /im CCleaner.exe
 taskkill /f /t /im CCleaner64.exe
+taskkill /f /t /im crashreporter.exe
 taskkill /f /t /im Dropbox.exe
 taskkill /f /t /im ETDCtrl.exe
 taskkill /f /t /im ETDCtrlHelper.exe
@@ -151,15 +151,15 @@ taskkill /f /t /im Igfxpers.exe
 taskkill /f /t /im Igfxtray.exe
 taskkill /f /t /im MSACCESS.exe
 taskkill /f /t /im MSOSYNC.exe
-taskkill /f /t /im NOTEPAD.exe
 taskkill /f /t /im OneDrive.exe
+taskkill /f /t /im Photoshop.exe
 taskkill /f /t /im POWERPNT.exe
 taskkill /f /t /im SndVol.exe 
 taskkill /f /t /im SystemPropertiesAdvanced.exe
 taskkill /f /t /im SystemSettings.exe
 taskkill /f /t /im SystemSettingsBroker.exe
-taskkill /f /t /im Taskmgr.exe
 taskkill /f /t /im TeamViewer.exe
+taskkill /f /t /im thunderbird.exe
 taskkill /f /t /im UninstallMonitor.exe
 taskkill /f /t /im VBoxSDS.exe
 taskkill /f /t /im VBoxSVC.exe
@@ -175,7 +175,6 @@ taskkill /f /t /im mspub.exe
 taskkill /f /t /im onenote.exe
 taskkill /f /t /im outlook.exe
 taskkill /f /t /im RAVBg64.exe
-rem taskkill /f /t /im steamwebhelper.exe
 taskkill /f /t /im ShellExperienceHost.exe
 taskkill /f /t /im systeminfo.exe
 taskkill /f /t /im WinAuth.exe
@@ -279,11 +278,15 @@ cls
 echo.
 set /p= " Liberando RAM, por favor espere...  " <nul  
 timeout /t 2 /nobreak > NUL
-echo Mystring=(1000000000) > %temp%\liberaram.vbs
-start %temp%\liberaram.vbs
-echo Mystring=(1655000000) > %temp%\liberaram.vbs
-start %temp%\liberaram.vbs
-echo Mystring=(2000000000) > %temp%\liberaram.vbs
+echo Mystring=(80000000) > %temp%\liberaram.vbs
+echo Mystring=(160000000) >> %temp%\liberaram.vbs
+echo Mystring=(320000000) >> %temp%\liberaram.vbs
+echo Mystring=(655000000) >> %temp%\liberaram.vbs
+echo Mystring=(1000000000) >> %temp%\liberaram.vbs
+echo Mystring=(1655000000) >> %temp%\liberaram.vbs
+echo Mystring=(2000000000) >> %temp%\liberaram.vbs
+echo Mystring=(2650000000) >> %temp%\liberaram.vbs
+echo Mystring=(3000000000) >> %temp%\liberaram.vbs
 start %temp%\liberaram.vbs
 CLS
 echo  RAM liberada.. [OK] 
