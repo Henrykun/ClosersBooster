@@ -82,13 +82,24 @@ taskkill /f /t /im Chrome.exe
 taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
 taskkill /f /t /im Calc.exe
-taskkill /f /t /im Explorer.exe
 taskkill /f /t /im NOTEPAD.exe
 taskkill /f /t /im Taskmgr.exe
 taskkill /f /t /im Wale.exe
 taskkill /f /t /im mpc-hc64.exe
-taskkill /f /t /im steamwebhelper.exe
 taskkill /f /t /im wmplayer.exe
+del "C:\closers\Log" /f /s /q
+del "C:\Program Files (x86)\Steam\steamapps\common\closers\Log" /f /s /q
+rd "C:\closers\Log" /s /q
+rd "C:\Program Files (x86)\Steam\steamapps\common\closers\Log" /s /q
+del %WINDIR%\Temp /f /s /q
+rd %WINDIR%\Temp /s /q
+MKDIR %WINDIR%\Temp
+IF EXIST %temp% (
+cd /D %temp%
+for /d %%D in (*) do rd /s /q "%%D"
+del /f /q *
+)
+taskkill /f /im Explorer.exe
 Start Explorer.exe
 Goto Generico
 
@@ -107,7 +118,6 @@ Goto Generico
 :Firefox
 CLS
 taskkill /f /t /im Chrome.exe
-
 taskkill /f /t /im Discord.exe
 Goto Generico
 
