@@ -129,6 +129,7 @@ PAUSE > NUL
 EXIT
 
 :Generico
+wmic process where name="cw.exe" CALL setpriority 256
 for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Google ^| findstr Update') do sc stop %%x
 for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Adobe ^| findstr Update') do sc stop %%x
 sc stop AdobeARMservice
@@ -140,6 +141,7 @@ sc stop gupdate
 sc stop gupdatem
 sc stop iphlpsvc
 sc stop MozillaMaintenance
+sc stop sysmain
 sc stop teamviewer
 sc stop wlidsvc
 sc stop wuauserv
