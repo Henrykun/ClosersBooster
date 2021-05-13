@@ -283,6 +283,7 @@ GOTO:EOF
 :MemoryOptimize
 CLS
 Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "AlwaysUnloadDll" /t REG_DWORD /d "1" /f
+Powershell.exe Disable-MMAgent -MemoryCompression
 GOTO:EOF
 
 :LiberarRam
