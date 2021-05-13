@@ -141,7 +141,7 @@ sc stop gupdate
 sc stop gupdatem
 sc stop iphlpsvc
 sc stop MozillaMaintenance
-sc stop sysmain
+rem sc stop sysmain
 sc stop teamviewer
 sc stop wlidsvc
 sc stop wuauserv
