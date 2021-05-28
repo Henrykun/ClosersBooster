@@ -129,7 +129,6 @@ PAUSE > NUL
 EXIT
 
 :Generico
-wmic process where name="cw.exe" CALL setpriority 256
 for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Google ^| findstr Update') do sc stop %%x
 for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Adobe ^| findstr Update') do sc stop %%x
 sc stop AdobeARMservice
@@ -287,7 +286,17 @@ Powershell.exe Enable-MMAgent -MemoryCompression
 GOTO:EOF
 
 :LiberarRam
-cls
+SET "ERRORLEVEL="
+tasklist /fi "IMAGENAME eq CW.EXE" | find "CW.EXE"
+IF "%ERRORLEVEL%"=="1" (
+CLS
+Echo Esperando que Closers sea Ejecutado...
+TIMEOUT /T 6 >NUL
+GOTO LiberarRam
+)
+CLS
+wmic process where name="CW.EXE" CALL setpriority 256
+CLS
 echo.
 set /p= " Liberando RAM, por favor espere...  " <nul  
 timeout /t 2 /nobreak > NUL
