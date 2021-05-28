@@ -134,14 +134,13 @@ for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Google ^| fi
 for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Adobe ^| findstr Update') do sc stop %%x
 sc stop AdobeARMservice
 sc stop DHCPServer
+sc stop MozillaMaintenance
 sc stop Spooler
 sc stop VBoxSDS
 sc stop cmcore
 sc stop gupdate
 sc stop gupdatem
 sc stop iphlpsvc
-sc stop MozillaMaintenance
-rem sc stop sysmain
 sc stop teamviewer
 sc stop wlidsvc
 sc stop wuauserv
