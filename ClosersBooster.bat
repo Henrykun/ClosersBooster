@@ -74,6 +74,7 @@ CLS
 taskkill /f /t /im Chrome.exe
 taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
+taskkill /f /t /im StikyNot.exe
 Goto Generico
 
 :ClosersEX
@@ -83,6 +84,7 @@ taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
 taskkill /f /t /im Calc.exe
 taskkill /f /t /im NOTEPAD.exe
+taskkill /f /t /im StikyNot.exe
 taskkill /f /t /im Taskmgr.exe
 taskkill /f /t /im Wale.exe
 taskkill /f /t /im mpc-hc64.exe
@@ -131,6 +133,7 @@ EXIT
 :Generico
 for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Google ^| findstr Update') do sc stop %%x
 for /f "tokens=2 delims=()" %%x in ('sc query state^=all ^| findstr Adobe ^| findstr Update') do sc stop %%x
+sc stop "Adguard Service"
 sc stop AdobeARMservice
 sc stop DHCPServer
 sc stop MozillaMaintenance
@@ -143,6 +146,7 @@ sc stop iphlpsvc
 sc stop teamviewer
 sc stop wlidsvc
 sc stop wuauserv
+taskkill /t /f /im Adguard.exe 
 taskkill /f /t /im AcroRd32.exe
 taskkill /f /t /im CCUpdate.exe
 taskkill /f /t /im CCleaner.exe
@@ -189,7 +193,8 @@ taskkill /f /t /im ShellExperienceHost.exe
 taskkill /f /t /im systeminfo.exe
 taskkill /f /t /im WinAuth.exe
 taskkill /f /t /im winword.exe
-Call :LiberarRam
+CALL :LiberarRam
+CALL :RAMRush
 EXIT
 
 Rem Nuevas Funciones
@@ -198,7 +203,6 @@ Rem Nuevas Funciones
 CLS
 CALL :UPDATESWINOFF
 CALL :FirefoxPrefOFF
-CALL :FirefoxSET
 CALL :AdobeGoogleUpdateOFF
 CALL :MemoryOptimize
 Goto INICIO
@@ -283,6 +287,21 @@ CLS
 Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v "AlwaysUnloadDll" /t REG_DWORD /d "1" /f
 rem Powershell.exe Disable-MMAgent -MemoryCompression
 Powershell.exe Enable-MMAgent -MemoryCompression
+GOTO:EOF
+
+:RAMRush
+IF EXIST "%PROGRAMFILES(X86)%\RAMRush" (
+taskkill /f /t /im RAMRush.exe
+CD "%PROGRAMFILES(X86)%\RAMRush"
+START RAMRush.exe
+"%PROGRAMFILES(X86)%\RAMRush/RAMRush.exe" -AutoOptimize
+)
+IF EXIST "%PROGRAMFILES%\RAMRush%" (
+taskkill /f /t /im RAMRush.exe
+CD "%PROGRAMFILES%\RAMRush"
+START RAMRush.exe
+"%PROGRAMFILES%\RAMRush/RAMRush.exe" -AutoOptimize
+)
 GOTO:EOF
 
 :LiberarRam
