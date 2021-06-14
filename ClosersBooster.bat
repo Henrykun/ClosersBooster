@@ -294,13 +294,21 @@ IF EXIST "%PROGRAMFILES(X86)%\RAMRush" (
 taskkill /f /t /im RAMRush.exe
 CD "%PROGRAMFILES(X86)%\RAMRush"
 START RAMRush.exe
-"%PROGRAMFILES(X86)%\RAMRush/RAMRush.exe" -AutoOptimize
+START RAMRush.exe -AutoOptimize
+GOTO:EOF
 )
 IF EXIST "%PROGRAMFILES%\RAMRush%" (
 taskkill /f /t /im RAMRush.exe
 CD "%PROGRAMFILES%\RAMRush"
 START RAMRush.exe
-"%PROGRAMFILES%\RAMRush/RAMRush.exe" -AutoOptimize
+START RAMRush.exe -AutoOptimize
+GOTO:EOF
+)
+CD /D "%~dp0"
+IF EXIST RAMRush.exe (
+taskkill /f /t /im RAMRush.exe
+START RAMRush.exe
+START RAMRush.exe -AutoOptimize
 )
 GOTO:EOF
 
