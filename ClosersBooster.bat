@@ -43,7 +43,7 @@ echo  [D] Cerrar Todo Menos Closers y Discord
 echo  [G] Cerrar Todo Menos Closers y Google Chrome
 echo  [F] Cerrar Todo Menos Closers y Firefox
 echo %linea%
-Echo  [X] Reactivar servicio de Impresoras
+Echo  [X] Reactivar servicio de Impresoras y Sysmain(Superfetch)
 echo %linea%
 Echo  [U] Desactivar Actualizaciones(Win-Update, Adobe, Google, Java..)
 echo %linea%
@@ -130,7 +130,9 @@ Goto Generico
 :Impresora
 CLS
 sc start Spooler
-Echo Servioio de impresion activado correctamente, pulsa una tecla para salir.
+sc start sysmain
+CLS
+Echo Servicio de impresion Y Sysmain activado correctamente, pulsa una tecla para salir.
 PAUSE > NUL
 EXIT
 
@@ -147,6 +149,7 @@ sc stop cmcore
 sc stop gupdate
 sc stop gupdatem
 sc stop iphlpsvc
+sc stop sysmain
 sc stop teamviewer
 sc stop wlidsvc
 sc stop wuauserv
@@ -328,16 +331,6 @@ CLS
 echo.
 set /p= " Liberando RAM, por favor espere...  " <nul  
 timeout /t 2 /nobreak > NUL
-echo Mystring=(80000000) > %temp%\liberaram.vbs
-echo Mystring=(160000000) >> %temp%\liberaram.vbs
-echo Mystring=(320000000) >> %temp%\liberaram.vbs
-echo Mystring=(655000000) >> %temp%\liberaram.vbs
-echo Mystring=(1000000000) >> %temp%\liberaram.vbs
-echo Mystring=(1655000000) >> %temp%\liberaram.vbs
-echo Mystring=(2000000000) >> %temp%\liberaram.vbs
-echo Mystring=(2650000000) >> %temp%\liberaram.vbs
-echo Mystring=(3000000000) >> %temp%\liberaram.vbs
-start %temp%\liberaram.vbs
 CLS
 echo  RAM liberada.. [OK] 
 timeout /t 3 /nobreak > NUL
