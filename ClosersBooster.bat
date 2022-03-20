@@ -48,6 +48,13 @@ SET "ERRORLEVEL="
 tasklist /fi "IMAGENAME eq Steam.exe" | find /I "Steam.exe"
 IF "%ERRORLEVEL%"=="0" SET "Navegador=Steam"
 SET "ERRORLEVEL="
+tasklist /fi "IMAGENAME eq CLOSERS.EXE" | find /I "CLOSERS.EXE"
+IF "%ERRORLEVEL%"=="0" ( SET "ClosersAPP=0"
+CLS
+echo %linea%
+echo  Selecciona una opcion y Pulsa el Boton Amarillo de PLAY en el Launcher:
+GOTO INICIO2 )
+SET "ERRORLEVEL="
 tasklist /fi "IMAGENAME eq CW.EXE" | find /I "CW.EXE"
 IF "%ERRORLEVEL%"=="1" ( SET "ClosersAPP=1"
 CLS
