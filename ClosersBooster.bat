@@ -1,6 +1,6 @@
 @echo off
 Title ClosersBooster Finalizando Procesos Innecesarios(By Henry)
-MODE con:cols=76 lines=20
+MODE con:cols=76 lines=22
 color 0E
 cls
 :: BatchGotAdmin 
@@ -32,9 +32,30 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0" 
 :--------------------------------------  
 
+:MisVariables
+CLS
+CD /D "%~dp0"
+SET "MYCLOSERS=C:\closers"
+IF EXIST "%PROGRAMFILES(X86)%\Steam\steamapps\common\closers\CLOSERS.EXE" (
+SET "MYCLOSERS=%PROGRAMFILES(X86)%\Steam\steamapps\common\closers")
+
 :INICIO
 Set Linea=----------------------------------------------------------------------------
-cls
+CLS
+SET "ClosersAPP=0"
+SET "Navegador=el Navegador"
+SET "ERRORLEVEL="
+tasklist /fi "IMAGENAME eq Steam.exe" | find /I "Steam.exe"
+IF "%ERRORLEVEL%"=="0" SET "Navegador=Steam"
+SET "ERRORLEVEL="
+tasklist /fi "IMAGENAME eq CW.EXE" | find /I "CW.EXE"
+IF "%ERRORLEVEL%"=="1" ( SET "ClosersAPP=1"
+CLS
+echo %linea%
+echo  Selecciona una opcion y luego abre Closers por %Navegador%:
+GOTO INICIO2 )
+CLS
+:INICIO2
 echo %linea%
 echo  [A] Closers, Discord, Steam y Navegadores "ABIERTO" (lo demas cierralo)
 echo  [C] Cerrar Todo Menos Closers (Modo Nomal)
@@ -66,10 +87,12 @@ SET "var="
 Goto INICIO
 
 :Todos
+IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
 Goto Generico
 
 :Closers
+IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
 taskkill /f /t /im Brave.exe
 taskkill /f /t /im Chrome.exe
@@ -79,6 +102,7 @@ taskkill /f /t /im StikyNot.exe
 Goto Generico
 
 :ClosersEX
+IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
 taskkill /f /t /im Brave.exe
 taskkill /f /t /im Chrome.exe
@@ -108,6 +132,7 @@ Start Explorer.exe
 Goto Generico
 
 :Discord
+IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
 taskkill /f /t /im Brave.exe
 taskkill /f /t /im Chrome.exe
@@ -115,12 +140,14 @@ taskkill /f /t /im Firefox.exe
 Goto Generico
 
 :Google
+IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
 taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
 Goto Generico
 
 :Firefox
+IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
 taskkill /f /t /im Brave.exe
 taskkill /f /t /im Chrome.exe
@@ -200,7 +227,7 @@ taskkill /f /t /im ShellExperienceHost.exe
 taskkill /f /t /im systeminfo.exe
 taskkill /f /t /im WinAuth.exe
 taskkill /f /t /im winword.exe
-CALL :LiberarRam
+CALL :OPTIMIZAR
 CALL :RAMRush
 EXIT
 
@@ -316,23 +343,47 @@ START RAMRush.exe -AutoOptimize
 )
 GOTO:EOF
 
-:LiberarRam
-SET "ERRORLEVEL="
-tasklist /fi "IMAGENAME eq CW.EXE" | find "CW.EXE"
-IF "%ERRORLEVEL%"=="1" (
+:OPTIMIZAR
 CLS
-Echo Esperando que Closers sea Ejecutado...
-TIMEOUT /T 6 >NUL
-GOTO LiberarRam
+Echo Optimizando Closers para maximo rendimiento...
+SET "ERRORLEVEL="
+tasklist /fi "IMAGENAME eq xxd-0.xem" | find /I "xxd-0.xem"
+IF "%ERRORLEVEL%"=="0" (
+CLS
+wmic process where name="xcoronahost.xem" CALL setpriority 256
+wmic process where name="xxd-0.xem" CALL setpriority 256
+CLS
+Echo Closers Optimizado Correctamente Cerrando Proceso...
+TIMEOUT /T 3 >NUL
+GOTO:EOF
 )
 CLS
-wmic process where name="CW.EXE" CALL setpriority 256
+Echo Optimizando Closers para maximo rendimiento...
+TIMEOUT /T 6 >NUL
+GOTO OPTIMIZAR
+
+:ENMEMORIA
+	SET "ERRORLEVEL="
+	tasklist /fi "IMAGENAME eq Steam.exe" | find /I "Steam.exe"
+	IF "%ERRORLEVEL%"=="0" (
+	Start steam://run/215830
+	GOTO:EOF
+	)
+	START https://www.closersonline.com/signin/
+:EsperarClosers
+SET "Z1="
+SET "ERRORLEVEL="
+tasklist /fi "IMAGENAME eq CLOSERS.EXE" | find /I "CLOSERS.EXE"
+IF "%ERRORLEVEL%"=="0" (SET "Z1=1")
 CLS
-echo.
-set /p= " Liberando RAM, por favor espere...  " <nul  
-timeout /t 2 /nobreak > NUL
+SET "ERRORLEVEL="
+tasklist /fi "IMAGENAME eq CW.EXE" | find /I "CW.EXE"
+IF "%ERRORLEVEL%"=="1" (
 CLS
-echo  RAM liberada.. [OK] 
-timeout /t 3 /nobreak > NUL
-Del /S /Q %temp%\liberaram.vbs
+IF NOT "%Z1%"=="1" Echo Abra Closers desde el Website o desde Steam...
+IF "%Z1%"=="1" Echo Pulse el Boton de Play en Closers para continuar...
+TIMEOUT /T 6 >NUL
+GOTO EsperarClosers
+)
 GOTO:EOF
+exit
