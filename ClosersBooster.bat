@@ -332,7 +332,6 @@ Powershell.exe Enable-MMAgent -MemoryCompression
 GOTO:EOF
 
 :RAMRush
-for /f "tokens=1,2,* " %%i in ('REG QUERY HKEY_CURRENT_USER\Software\FTweak\RAMRush /v programfile ^| find /i "programfile"') do set "regramrush=%%k"
 SET "MYRAMRush=%PROGRAMFILES(X86)%\RAMRush\RAMRush.exe"
 IF EXIST "%PROGRAMFILES%\RAMRush\RAMRush.exe" (
 SET "MYRAMRush=%PROGRAMFILES%\RAMRush\RAMRush.exe")
