@@ -38,6 +38,7 @@ CD /D "%~dp0"
 SET "MYCLOSERS=C:\closers"
 IF EXIST "%PROGRAMFILES(X86)%\Steam\steamapps\common\closers\CLOSERS.EXE" (
 SET "MYCLOSERS=%PROGRAMFILES(X86)%\Steam\steamapps\common\closers")
+for /f "tokens=1,2,* " %%i in ('REG QUERY HKEY_CURRENT_USER\Software\FTweak\RAMRush /v programfile ^| find /i "programfile"') do set "regramrush=%%k"
 
 :INICIO
 Set Linea=----------------------------------------------------------------------------
@@ -331,23 +332,26 @@ Powershell.exe Enable-MMAgent -MemoryCompression
 GOTO:EOF
 
 :RAMRush
-IF EXIST "%PROGRAMFILES(X86)%\RAMRush" (
+for /f "tokens=1,2,* " %%i in ('REG QUERY HKEY_CURRENT_USER\Software\FTweak\RAMRush /v programfile ^| find /i "programfile"') do set "regramrush=%%k"
+SET "MYRAMRush=%PROGRAMFILES(X86)%\RAMRush\RAMRush.exe"
+IF EXIST "%PROGRAMFILES%\RAMRush\RAMRush.exe" (
+SET "MYRAMRush=%PROGRAMFILES%\RAMRush\RAMRush.exe")
+IF EXIST "%MYRAMRush%" (
+:RAMRush2
 taskkill /f /t /im RAMRush.exe
-CD "%PROGRAMFILES(X86)%\RAMRush"
-START RAMRush.exe -AutoOptimize
+reg add "HKCU\Software\FTweak\RAMRush" /v ShowMessageWhenOptimizing /t REG_DWORD /d 0x0 /f
+reg add "HKCU\Software\FTweak\RAMRush" /v CPUDataFromSystemPerform /t REG_DWORD /d 0x0 /f
+reg add "HKCU\Software\FTweak\RAMRush" /v AutoOptimize /t REG_DWORD /d 0x1 /f
+IF EXIST "%MYRAMRush%" ( START "" "%MYRAMRush%" -AutoOptimize
+GOTO:EOF
+) 
+IF EXIST "%regramrush%" ( START "" "%regramrush%" -AutoOptimize
 GOTO:EOF
 )
-IF EXIST "%PROGRAMFILES%\RAMRush%" (
-taskkill /f /t /im RAMRush.exe
-CD "%PROGRAMFILES%\RAMRush"
-START RAMRush.exe -AutoOptimize
-GOTO:EOF
 )
 CD /D "%~dp0"
-IF EXIST RAMRush.exe (
-taskkill /f /t /im RAMRush.exe
-START RAMRush.exe -AutoOptimize
-)
+IF EXIST RAMRush.exe GOTO RAMRush2
+IF EXIST "%regramrush%" GOTO RAMRush2
 GOTO:EOF
 
 :OPTIMIZAR
