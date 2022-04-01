@@ -332,6 +332,38 @@ Powershell.exe Enable-MMAgent -MemoryCompression
 GOTO:EOF
 
 :RAMRush
+SET "MYWiseMemo=%PROGRAMFILES%\Wise\Wise Memory Optimizer\WiseMemoryOptimzer.exe"
+IF EXIST "%PROGRAMFILES(X86)%\Wise\Wise Memory Optimizer\WiseMemoryOptimzer.exe" (
+SET "MYWiseMemo=%PROGRAMFILES%\Wise\Wise Memory Optimizer\WiseMemoryOptimzer.exe")
+IF EXIST "%~dp0WiseMemoryOptimzer.exe" (
+SET "MYWiseMemo=%~dp0WiseMemoryOptimzer.exe")
+IF EXIST "%MYWiseMemo%" (
+taskkill /f /t /im RAMRush.exe
+IF EXIST "%MYWiseMemo%" taskkill /f /t /im WiseMemoryOptimzer.exe
+Echo ^[MemoryOptimizer^] > "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo Language^=Spanish^(Spain^) >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo AutoOpt^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo AutoRun^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo ClearBoard^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo AutoUpdate^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo DefragMem^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo ClearMem^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo ClearStandy^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo Idle^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo MinToTray^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo ShowNotice^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo LowMem^=180 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo ^[General^] >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo SetupVer^=4.14.116 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo MsgIDs^= >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Start "" "%MYWiseMemo%"
+GOTO:EOF
+)
+SET "ERRORLEVEL="
+tasklist /fi "IMAGENAME eq WiseMemoryOptimzer.exe" | find /I "WiseMemoryOptimzer.exe"
+IF "%ERRORLEVEL%"=="0" ( taskkill /f /t /im RAMRush.exe
+GOTO:EOF )
+for /f "tokens=1,2,* " %%i in ('REG QUERY HKEY_CURRENT_USER\Software\FTweak\RAMRush /v programfile ^| find /i "programfile"') do set "regramrush=%%k"
 SET "MYRAMRush=%PROGRAMFILES(X86)%\RAMRush\RAMRush.exe"
 IF EXIST "%PROGRAMFILES%\RAMRush\RAMRush.exe" (
 SET "MYRAMRush=%PROGRAMFILES%\RAMRush\RAMRush.exe")
