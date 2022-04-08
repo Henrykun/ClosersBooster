@@ -1,6 +1,6 @@
 @echo off
 Title ClosersBooster Finalizando Procesos Innecesarios(By Henry)
-MODE con:cols=76 lines=22
+MODE con:cols=76 lines=23
 color 0E
 cls
 :: BatchGotAdmin 
@@ -67,10 +67,12 @@ CLS
 echo %linea%
 echo  [A] Closers, Discord, Steam y Navegadores "ABIERTO" (lo demas cierralo)
 echo  [C] Cerrar Todo Menos Closers (Modo Nomal)
-echo  [S] Cerrar Todo Menos Closers !!Modo Extremo!!
+echo  [E] Cerrar Todo Menos Closers !!Modo Extremo!!
 echo  [D] Cerrar Todo Menos Closers y Discord
-echo  [G] Cerrar Todo Menos Closers y Google Chrome
+echo  [G] Cerrar Todo Menos Closers y Google Chrome(y Brave)
 echo  [F] Cerrar Todo Menos Closers y Firefox
+echo  [M] Cerrar Todo Menos Closers y Microsoft Edge
+echo  [O] Cerrar Todo Menos Closers y Opera(y Safari)
 echo %linea%
 Echo  [X] Reactivar servicio de Impresoras y Sysmain(Superfetch)
 echo %linea%
@@ -83,12 +85,14 @@ echo %linea%
 
 :Validar
 SET /p var= ^> Seleccione una opcion [...]: 
-IF /I "%var%"=="A" call :Todos
-IF /I "%var%"=="C" call :Closers
-IF /I "%var%"=="S" call :ClosersEX
-IF /I "%var%"=="D" call :Discord
-IF /I "%var%"=="G" call :Google
-IF /I "%var%"=="F" call :Firefox
+IF /I "%var%"=="A" Goto Todos
+IF /I "%var%"=="C" Goto Closers
+IF /I "%var%"=="E" Goto ClosersEX
+IF /I "%var%"=="D" Goto Discord
+IF /I "%var%"=="G" Goto Google
+IF /I "%var%"=="F" Goto Firefox
+IF /I "%var%"=="M" Goto MSEDge
+IF /I "%var%"=="O" Goto Opera
 IF /I "%var%"=="X" call :Impresora
 IF /I "%var%"=="U" call :OptimizarOK
 SET "var="
@@ -106,6 +110,10 @@ taskkill /f /t /im Brave.exe
 taskkill /f /t /im Chrome.exe
 taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
+taskkill /f /t /im MicrosoftEdgeCP.exe
+taskkill /f /t /im Msedge.exe
+taskkill /f /t /im Opera.exe
+taskkill /f /t /im Safari.exe
 taskkill /f /t /im StikyNot.exe
 Goto Generico
 
@@ -117,7 +125,11 @@ taskkill /f /t /im Chrome.exe
 taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
 taskkill /f /t /im Calc.exe
+taskkill /f /t /im MicrosoftEdgeCP.exe
+taskkill /f /t /im Msedge.exe
 taskkill /f /t /im NOTEPAD.exe
+taskkill /f /t /im Opera.exe
+taskkill /f /t /im Safari.exe
 taskkill /f /t /im StikyNot.exe
 taskkill /f /t /im Taskmgr.exe
 taskkill /f /t /im Wale.exe
@@ -145,6 +157,10 @@ CLS
 taskkill /f /t /im Brave.exe
 taskkill /f /t /im Chrome.exe
 taskkill /f /t /im Firefox.exe
+taskkill /f /t /im MicrosoftEdgeCP.exe
+taskkill /f /t /im Msedge.exe
+taskkill /f /t /im Opera.exe
+taskkill /f /t /im Safari.exe
 Goto Generico
 
 :Google
@@ -152,6 +168,10 @@ IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
 taskkill /f /t /im Discord.exe
 taskkill /f /t /im Firefox.exe
+taskkill /f /t /im MicrosoftEdgeCP.exe
+taskkill /f /t /im Msedge.exe
+taskkill /f /t /im Opera.exe
+taskkill /f /t /im Safari.exe
 Goto Generico
 
 :Firefox
@@ -160,6 +180,32 @@ CLS
 taskkill /f /t /im Brave.exe
 taskkill /f /t /im Chrome.exe
 taskkill /f /t /im Discord.exe
+taskkill /f /t /im MicrosoftEdgeCP.exe
+taskkill /f /t /im Msedge.exe
+taskkill /f /t /im Opera.exe
+taskkill /f /t /im Safari.exe
+Goto Generico
+
+:MSEDge
+IF "%ClosersAPP%"=="1" Call :ENMEMORIA
+CLS
+taskkill /f /t /im Brave.exe
+taskkill /f /t /im Chrome.exe
+taskkill /f /t /im Discord.exe
+taskkill /f /t /im Firefox.exe
+taskkill /f /t /im Opera.exe
+taskkill /f /t /im Safari.exe
+Goto Generico
+
+:Opera
+IF "%ClosersAPP%"=="1" Call :ENMEMORIA
+CLS
+taskkill /f /t /im Brave.exe
+taskkill /f /t /im Chrome.exe
+taskkill /f /t /im Discord.exe
+taskkill /f /t /im Firefox.exe
+taskkill /f /t /im MicrosoftEdgeCP.exe
+taskkill /f /t /im Msedge.exe
 Goto Generico
 
 :Impresora
