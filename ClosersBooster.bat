@@ -232,6 +232,7 @@ sc stop gupdatem
 sc stop iphlpsvc
 sc stop sysmain
 sc stop teamviewer
+sc stop WSearch
 sc stop wlidsvc
 sc stop wuauserv
 taskkill /t /f /im Adguard.exe 
@@ -289,6 +290,7 @@ Rem Nuevas Funciones
 
 :OptimizarOK
 CLS
+sc config WSearch start=disabled >NUL 2>&1
 CALL :UPDATESWINOFF
 CALL :FirefoxPrefOFF
 CALL :AdobeGoogleUpdateOFF
@@ -398,7 +400,7 @@ Echo ClearStandy^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
 Echo Idle^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
 Echo MinToTray^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
 Echo ShowNotice^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo LowMem^=180 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
+Echo LowMem^=400 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
 Echo ^[General^] >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
 Echo SetupVer^=4.14.116 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
 Echo MsgIDs^= >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
