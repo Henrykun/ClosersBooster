@@ -278,7 +278,9 @@ taskkill /f /t /im mspub.exe
 taskkill /f /t /im onenote.exe
 taskkill /f /t /im outlook.exe
 taskkill /f /t /im RAVBg64.exe
+taskkill /f /t /im RuntimeBroker.exe
 taskkill /f /t /im ShellExperienceHost.exe
+taskkill /f /t /im smartscreen.exe
 taskkill /f /t /im systeminfo.exe
 taskkill /f /t /im WinAuth.exe
 taskkill /f /t /im winword.exe
@@ -427,6 +429,7 @@ GOTO:EOF
 IF EXIST "%regramrush%" ( START "" "%regramrush%" -AutoOptimize
 GOTO:EOF
 )
+GOTO:EOF
 )
 CD /D "%~dp0"
 IF EXIST RAMRush.exe GOTO RAMRush2
