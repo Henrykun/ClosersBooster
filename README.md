@@ -14,7 +14,7 @@ Pero si por alguna razón tu PC tiene instalado programas que nos son soportados
 
 --------------
 ### Ejemplo:
-**taskkill /f /t /im MYPrograma.exe**
+**%tk% MYPrograma.exe**
 
 Y añádelo entre la línea "**:Generico**" y la Ultima Línea "**EXIT**"
 
