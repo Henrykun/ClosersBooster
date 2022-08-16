@@ -382,35 +382,37 @@ Powershell.exe Enable-MMAgent -MemoryCompression
 GOTO:EOF
 
 :RAMRush
-SET "MYWiseMemo=%PROGRAMFILES%\Wise\Wise Memory Optimizer\WiseMemoryOptimzer.exe"
-IF EXIST "%PROGRAMFILES(X86)%\Wise\Wise Memory Optimizer\WiseMemoryOptimzer.exe" (
-SET "MYWiseMemo=%PROGRAMFILES%\Wise\Wise Memory Optimizer\WiseMemoryOptimzer.exe")
-IF EXIST "%~dp0WiseMemoryOptimzer.exe" (
-SET "MYWiseMemo=%~dp0WiseMemoryOptimzer.exe")
-IF EXIST "%MYWiseMemo%" (
-taskkill /f /t /im RAMRush.exe
-IF EXIST "%MYWiseMemo%" taskkill /f /t /im WiseMemoryOptimzer.exe
-Echo ^[MemoryOptimizer^] > "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo Language^=Spanish^(Spain^) >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo AutoOpt^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo AutoRun^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo ClearBoard^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo AutoUpdate^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo DefragMem^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo ClearMem^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo ClearStandy^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo Idle^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo MinToTray^=1 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo ShowNotice^=0 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo LowMem^=400 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo ^[General^] >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo SetupVer^=4.14.116 >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Echo MsgIDs^= >> "%APPDATA%\Wise Memory Optimzer\MemoryConfig.ini"
-Start "" "%MYWiseMemo%"
-GOTO:EOF
+IF EXIST "C:\Program Files (x86)\Closers Super Rapido\memBoost.exe" (
+SET "memBoost=C:\Program Files (x86)\Closers Super Rapido\memBoost.exe"
+SET "memBoostini=C:\Program Files (x86)\Closers Super Rapido\memBoost.ini")
+IF EXIST "%PROGRAMFILES(X86)%\Closers Super Rapido\memBoost.exe" (
+SET "memBoost=%PROGRAMFILES(X86)%\Closers Super Rapido\memBoost.exe"
+SET "memBoostini=%PROGRAMFILES(X86)%\Closers Super Rapido\memBoost.ini")
+IF EXIST "%~dp0memBoost.exe" (
+SET "memBoost=%~dp0memBoost.exe"
+SET "memBoostini=%~dp0memBoost.ini")
+IF EXIST "%memBoost%" (
+%TK% RAMRush.exe
+IF EXIST "%memBoost%" %TK% memBoost.exe
+Echo ^[Main^] > "%memBoostini%"
+Echo SetWindowOnTop^=1 >> "%memBoostini%"
+Echo ShowNotifications^=0 >> "%memBoostini%"
+Echo ForceProcessesBehave^=1 >> "%memBoostini%"
+Echo ^[Modes^] >> "%memBoostini%"
+Echo DefaultOptimizationMethod^=1 >> "%memBoostini%"
+Echo AutoOptimizationCount^=35 >> "%memBoostini%"
+Echo ^[Sounds^] >> "%memBoostini%"
+Echo PlaySystemSounds^=1 >> "%memBoostini%"
+Echo PlayWarnings^=0 >> "%memBoostini%"
+Echo PlayWarnEvery^=3 >> "%memBoostini%"
+Echo PlayWarnIfExceed^=80 >> "%memBoostini%"
+Echo ^[Advanced^] >> "%memBoostini%"
+Echo ClearSystemCacheOptimize^=1 >> "%memBoostini%"
+Start "" "%memBoost%"
+GOTO CONTINUAR3
 )
 SET "ERRORLEVEL="
-tasklist /fi "IMAGENAME eq WiseMemoryOptimzer.exe" | find /I "WiseMemoryOptimzer.exe"
+tasklist /fi "IMAGENAME eq memBoost.exe" | find /I "memBoost.exe"
 IF "%ERRORLEVEL%"=="0" ( taskkill /f /t /im RAMRush.exe
 GOTO:EOF )
 for /f "tokens=1,2,* " %%i in ('REG QUERY HKEY_CURRENT_USER\Software\FTweak\RAMRush /v programfile ^| find /i "programfile"') do set "regramrush=%%k"
