@@ -32,6 +32,9 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0" 
 :--------------------------------------  
 
+:EulaAutoPsKill
+reg add "HKEY_CURRENT_USER\Software\Sysinternals\PsKill" /v EulaAccepted /t REG_DWORD /d 0x1 /f
+
 :MisVariables
 CLS
 CD /D "%~dp0"
@@ -39,6 +42,8 @@ SET "MYCLOSERS=C:\closers"
 IF EXIST "%PROGRAMFILES(X86)%\Steam\steamapps\common\closers\CLOSERS.EXE" (
 SET "MYCLOSERS=%PROGRAMFILES(X86)%\Steam\steamapps\common\closers")
 for /f "tokens=1,2,* " %%i in ('REG QUERY HKEY_CURRENT_USER\Software\FTweak\RAMRush /v programfile ^| find /i "programfile"') do set "regramrush=%%k"
+IF EXIST pskill64.exe SET "TK=pskill64"
+IF NOT EXIST pskill64.exe SET "TK=taskkill /f /t /im"
 
 :INICIO
 Set Linea=----------------------------------------------------------------------------
@@ -106,35 +111,35 @@ Goto Generico
 :Closers
 IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
-taskkill /f /t /im Brave.exe
-taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Discord.exe
-taskkill /f /t /im Firefox.exe
-taskkill /f /t /im MicrosoftEdgeCP.exe
-taskkill /f /t /im Msedge.exe
-taskkill /f /t /im Opera.exe
-taskkill /f /t /im Safari.exe
-taskkill /f /t /im StikyNot.exe
+%tk% Brave.exe
+%tk% Chrome.exe
+%tk% Discord.exe
+%tk% Firefox.exe
+%tk% MicrosoftEdgeCP.exe
+%tk% Msedge.exe
+%tk% Opera.exe
+%tk% Safari.exe
+%tk% StikyNot.exe
 Goto Generico
 
 :ClosersEX
 IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
-taskkill /f /t /im Brave.exe
-taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Discord.exe
-taskkill /f /t /im Firefox.exe
-taskkill /f /t /im Calc.exe
-taskkill /f /t /im MicrosoftEdgeCP.exe
-taskkill /f /t /im Msedge.exe
-taskkill /f /t /im NOTEPAD.exe
-taskkill /f /t /im Opera.exe
-taskkill /f /t /im Safari.exe
-taskkill /f /t /im StikyNot.exe
-taskkill /f /t /im Taskmgr.exe
-taskkill /f /t /im Wale.exe
-taskkill /f /t /im mpc-hc64.exe
-taskkill /f /t /im wmplayer.exe
+%tk% Brave.exe
+%tk% Chrome.exe
+%tk% Discord.exe
+%tk% Firefox.exe
+%tk% Calc.exe
+%tk% MicrosoftEdgeCP.exe
+%tk% Msedge.exe
+%tk% NOTEPAD.exe
+%tk% Opera.exe
+%tk% Safari.exe
+%tk% StikyNot.exe
+%tk% Taskmgr.exe
+%tk% Wale.exe
+%tk% mpc-hc64.exe
+%tk% wmplayer.exe
 del "C:\closers\Log" /f /s /q
 del "C:\Program Files (x86)\Steam\steamapps\common\closers\Log" /f /s /q
 rd "C:\closers\Log" /s /q
@@ -154,58 +159,58 @@ Goto Generico
 :Discord
 IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
-taskkill /f /t /im Brave.exe
-taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Firefox.exe
-taskkill /f /t /im MicrosoftEdgeCP.exe
-taskkill /f /t /im Msedge.exe
-taskkill /f /t /im Opera.exe
-taskkill /f /t /im Safari.exe
+%tk% Brave.exe
+%tk% Chrome.exe
+%tk% Firefox.exe
+%tk% MicrosoftEdgeCP.exe
+%tk% Msedge.exe
+%tk% Opera.exe
+%tk% Safari.exe
 Goto Generico
 
 :Google
 IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
-taskkill /f /t /im Discord.exe
-taskkill /f /t /im Firefox.exe
-taskkill /f /t /im MicrosoftEdgeCP.exe
-taskkill /f /t /im Msedge.exe
-taskkill /f /t /im Opera.exe
-taskkill /f /t /im Safari.exe
+%tk% Discord.exe
+%tk% Firefox.exe
+%tk% MicrosoftEdgeCP.exe
+%tk% Msedge.exe
+%tk% Opera.exe
+%tk% Safari.exe
 Goto Generico
 
 :Firefox
 IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
-taskkill /f /t /im Brave.exe
-taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Discord.exe
-taskkill /f /t /im MicrosoftEdgeCP.exe
-taskkill /f /t /im Msedge.exe
-taskkill /f /t /im Opera.exe
-taskkill /f /t /im Safari.exe
+%tk% Brave.exe
+%tk% Chrome.exe
+%tk% Discord.exe
+%tk% MicrosoftEdgeCP.exe
+%tk% Msedge.exe
+%tk% Opera.exe
+%tk% Safari.exe
 Goto Generico
 
 :MSEDge
 IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
-taskkill /f /t /im Brave.exe
-taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Discord.exe
-taskkill /f /t /im Firefox.exe
-taskkill /f /t /im Opera.exe
-taskkill /f /t /im Safari.exe
+%tk% Brave.exe
+%tk% Chrome.exe
+%tk% Discord.exe
+%tk% Firefox.exe
+%tk% Opera.exe
+%tk% Safari.exe
 Goto Generico
 
 :Opera
 IF "%ClosersAPP%"=="1" Call :ENMEMORIA
 CLS
-taskkill /f /t /im Brave.exe
-taskkill /f /t /im Chrome.exe
-taskkill /f /t /im Discord.exe
-taskkill /f /t /im Firefox.exe
-taskkill /f /t /im MicrosoftEdgeCP.exe
-taskkill /f /t /im Msedge.exe
+%tk% Brave.exe
+%tk% Chrome.exe
+%tk% Discord.exe
+%tk% Firefox.exe
+%tk% MicrosoftEdgeCP.exe
+%tk% Msedge.exe
 Goto Generico
 
 :Impresora
@@ -236,54 +241,54 @@ sc stop WSearch
 sc stop wlidsvc
 sc stop wuauserv
 taskkill /t /f /im Adguard.exe 
-taskkill /f /t /im AcroRd32.exe
-taskkill /f /t /im CCUpdate.exe
-taskkill /f /t /im CCleaner.exe
-taskkill /f /t /im CCleaner64.exe
-taskkill /f /t /im crashreporter.exe
-taskkill /f /t /im Dropbox.exe
-taskkill /f /t /im ETDCtrl.exe
-taskkill /f /t /im ETDCtrlHelper.exe
-taskkill /f /t /im ETDService.exe
-taskkill /f /t /im GoogleCrashHandler.exe
-taskkill /f /t /im GoogleCrashHandler64.exe
-taskkill /f /t /im GoogleUpdate.exe
-taskkill /f /t /im Ielowutil.exe
-taskkill /f /t /im Iexplore.exe
-taskkill /f /t /im Igfxpers.exe
-taskkill /f /t /im Igfxtray.exe
-taskkill /f /t /im MSACCESS.exe
-taskkill /f /t /im MSOSYNC.exe
-taskkill /f /t /im OneDrive.exe
-taskkill /f /t /im Photoshop.exe
-taskkill /f /t /im POWERPNT.exe
-taskkill /f /t /im SndVol.exe 
-taskkill /f /t /im SystemPropertiesAdvanced.exe
-taskkill /f /t /im SystemSettings.exe
-taskkill /f /t /im SystemSettingsBroker.exe
-taskkill /f /t /im TeamViewer.exe
-taskkill /f /t /im thunderbird.exe
-taskkill /f /t /im UninstallMonitor.exe
-taskkill /f /t /im VBoxSDS.exe
-taskkill /f /t /im VBoxSVC.exe
-taskkill /f /t /im VirtualBox.exe
-taskkill /f /t /im cmcore.exe
-taskkill /f /t /im excel.exe
-taskkill /f /t /im iTunes.exe
-taskkill /f /t /im iTunesHelper.exe
-taskkill /f /t /im infopath.exe
-taskkill /f /t /im jucheck.exe
-taskkill /f /t /im juscheck.exe
-taskkill /f /t /im mspub.exe
-taskkill /f /t /im onenote.exe
-taskkill /f /t /im outlook.exe
-taskkill /f /t /im RAVBg64.exe
-taskkill /f /t /im RuntimeBroker.exe
-taskkill /f /t /im ShellExperienceHost.exe
-taskkill /f /t /im smartscreen.exe
-taskkill /f /t /im systeminfo.exe
-taskkill /f /t /im WinAuth.exe
-taskkill /f /t /im winword.exe
+%tk% AcroRd32.exe
+%tk% CCUpdate.exe
+%tk% CCleaner.exe
+%tk% CCleaner64.exe
+%tk% crashreporter.exe
+%tk% Dropbox.exe
+%tk% ETDCtrl.exe
+%tk% ETDCtrlHelper.exe
+%tk% ETDService.exe
+%tk% GoogleCrashHandler.exe
+%tk% GoogleCrashHandler64.exe
+%tk% GoogleUpdate.exe
+%tk% Ielowutil.exe
+%tk% Iexplore.exe
+%tk% Igfxpers.exe
+%tk% Igfxtray.exe
+%tk% MSACCESS.exe
+%tk% MSOSYNC.exe
+%tk% OneDrive.exe
+%tk% Photoshop.exe
+%tk% POWERPNT.exe
+%tk% SndVol.exe 
+%tk% SystemPropertiesAdvanced.exe
+%tk% SystemSettings.exe
+%tk% SystemSettingsBroker.exe
+%tk% TeamViewer.exe
+%tk% thunderbird.exe
+%tk% UninstallMonitor.exe
+%tk% VBoxSDS.exe
+%tk% VBoxSVC.exe
+%tk% VirtualBox.exe
+%tk% cmcore.exe
+%tk% excel.exe
+%tk% iTunes.exe
+%tk% iTunesHelper.exe
+%tk% infopath.exe
+%tk% jucheck.exe
+%tk% juscheck.exe
+%tk% mspub.exe
+%tk% onenote.exe
+%tk% outlook.exe
+%tk% RAVBg64.exe
+%tk% RuntimeBroker.exe
+%tk% ShellExperienceHost.exe
+%tk% smartscreen.exe
+%tk% systeminfo.exe
+%tk% WinAuth.exe
+%tk% winword.exe
 CALL :OPTIMIZAR
 CALL :RAMRush
 EXIT
@@ -409,11 +414,11 @@ Echo PlayWarnIfExceed^=80 >> "%memBoostini%"
 Echo ^[Advanced^] >> "%memBoostini%"
 Echo ClearSystemCacheOptimize^=1 >> "%memBoostini%"
 Start "" "%memBoost%"
-GOTO CONTINUAR3
+GOTO:EOF
 )
 SET "ERRORLEVEL="
 tasklist /fi "IMAGENAME eq memBoost.exe" | find /I "memBoost.exe"
-IF "%ERRORLEVEL%"=="0" ( taskkill /f /t /im RAMRush.exe
+IF "%ERRORLEVEL%"=="0" ( %tk% RAMRush.exe
 GOTO:EOF )
 for /f "tokens=1,2,* " %%i in ('REG QUERY HKEY_CURRENT_USER\Software\FTweak\RAMRush /v programfile ^| find /i "programfile"') do set "regramrush=%%k"
 SET "MYRAMRush=%PROGRAMFILES(X86)%\RAMRush\RAMRush.exe"
@@ -421,7 +426,7 @@ IF EXIST "%PROGRAMFILES%\RAMRush\RAMRush.exe" (
 SET "MYRAMRush=%PROGRAMFILES%\RAMRush\RAMRush.exe")
 IF EXIST "%MYRAMRush%" (
 :RAMRush2
-taskkill /f /t /im RAMRush.exe
+%tk% RAMRush.exe
 reg add "HKCU\Software\FTweak\RAMRush" /v ShowMessageWhenOptimizing /t REG_DWORD /d 0x0 /f
 reg add "HKCU\Software\FTweak\RAMRush" /v CPUDataFromSystemPerform /t REG_DWORD /d 0x0 /f
 reg add "HKCU\Software\FTweak\RAMRush" /v AutoOptimize /t REG_DWORD /d 0x1 /f
